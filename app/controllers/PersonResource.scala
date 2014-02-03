@@ -17,10 +17,10 @@ object PersonResource extends Controller {
     })
   }
 
-  def put = Action {
-    val person = new Person("a", "b")
+  def put = Action(parse.tolerantJson) { request =>
+    val person:Person = JsonConverter.fromJson(request.body.toString(), classOf[Person])
     DbAdapter.putPerson(person)
-    Ok("done")
+    Ok(JsonConverter.toJson(person))
   }
 
 }

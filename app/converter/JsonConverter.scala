@@ -1,11 +1,19 @@
 package converter
 
-import com.codahale.jerkson.Json
-
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
 object JsonConverter {
 
-  def toJson(value:Any):String = {
+  val mapper = new ObjectMapper()
+  mapper.registerModule(DefaultScalaModule)
 
+  def toJson(value: Any): String = {
+    mapper.writeValueAsString(value)
   }
+
+  def fromJson[T](value: String, clazz:Class[T]) : T = {
+    mapper.readValue[T](value, clazz)
+  }
+
 }
