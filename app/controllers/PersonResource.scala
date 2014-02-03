@@ -10,8 +10,8 @@ import converter.JsonConverter
  */
 object PersonResource extends Controller {
 
-  def get = Action {
-    Ok(DbAdapter.getPerson() match {
+  def get(id:Long) = Action {
+    Ok(DbAdapter.find(id) match {
       case None => "None"
       case Some(x) => JsonConverter.toJson(x)
     })

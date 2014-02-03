@@ -5,7 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET     /person                     controllers.PersonResource.get
+GET     /person/:id                 controllers.PersonResource.get(id:Long)
 PUT     /person                     controllers.PersonResource.put
 
 # Map static resources from the /public folder to the /assets URL path
