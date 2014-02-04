@@ -1,11 +1,9 @@
 package db
 
-import domain.{Entity, Person}
+import domain.Entity
 import org.squeryl.{Session, SessionFactory}
 import org.squeryl.adapters.MySQLAdapter
 import org.squeryl.PrimitiveTypeMode._
-import com.mysql.jdbc.Driver
-import java.util.Random
 
 /**
  * Created by rauricoste on 03/02/14.
@@ -18,15 +16,15 @@ object DbAdapter {
       java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/scala", "root", "password"),
       new MySQLAdapter))
 
-  def find[T <: Entity](id:Long): Option[Person] = {
+  def find[T <: Entity](clazz:Class[T])(id:Long): Option[T] = {
     inTransaction {
-      Library.persons.find(x => x.id == id)
+      Library.getTable[T](clazz).find(x => x.id == id)
     }
   }
 
-  def putPerson(person: Person) = {
+  def put[T <: Entity](entity: T) = {
     inTransaction {
-      Library.persons.insertOrUpdate(person)
+      Library.getTable[T](entity.getClass).insertOrUpdate(entity)
     }
   }
 }
