@@ -1,4 +1,4 @@
-package db
+package adapter.persistence
 
 import org.squeryl.{Table, Schema}
 import domain.Person

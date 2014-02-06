@@ -5,8 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET     /:className/:id             controllers.PersonResource.get(className:String, id:Long)
-PUT     /:className                 controllers.PersonResource.put(className:String)
+GET     /:className/:id             controllers.GenericResource.get(className:String, id:Long)
+PUT     /:className/                controllers.GenericResource.put(className:String)
+PUT     /:className                 controllers.GenericResource.put(className:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

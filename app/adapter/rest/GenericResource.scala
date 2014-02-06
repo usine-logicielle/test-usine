@@ -1,9 +1,9 @@
-package controllers
+package adapter.rest
 
 import play.api.mvc.{Action, Controller}
-import db.DbAdapter
-import domain.{Person, Entity}
+import domain.Entity
 import converter.JsonConverter
+import adapter.persistence.DbAdapter
 
 object GenericResource extends Controller {
 
@@ -27,7 +27,8 @@ object GenericResource extends Controller {
       val clazz:Class[_ <: Entity] = getClazz(className)
       val entity:Entity = JsonConverter.fromJson(clazz)(request.body.toString())
       DbAdapter.put(entity)
-      Ok(JsonConverter.toJson(entity))
+      val empty = new EmptyEntity(entity.id)
+      Ok(JsonConverter.toJson(empty))
   }
 
   private def getClazz[T <: Entity](className: String): Class[T] = {

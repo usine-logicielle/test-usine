@@ -1,4 +1,4 @@
-package db
+package adapter.persistence
 
 import domain.Entity
 import org.squeryl.{Session, SessionFactory}
@@ -24,7 +24,11 @@ object DbAdapter {
 
   def put[T <: Entity](entity: T) = {
     inTransaction {
-      Library.getTable[T](entity.getClass).insertOrUpdate(entity)
+      if (entity.id > 0) {
+        Library.getTable[T](entity.getClass).update(entity)
+      } else {
+        Library.getTable[T](entity.getClass).insert(entity)
+      }
     }
   }
 }
