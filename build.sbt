@@ -16,3 +16,5 @@ libraryDependencies ++= Seq(
 )
 
 play.Project.playScalaSettings
+
+ScctPlugin.instrumentSettings
