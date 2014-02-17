@@ -11,7 +11,8 @@ val derbyDriver = "org.apache.derby" % "derby" % "10.7.1.1"
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.1.3",
   "org.squeryl" %% "squeryl" % "0.9.5-6",
-  mysqlDriver
+  mysqlDriver,
+  "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
 )
 
 play.Project.playScalaSettings

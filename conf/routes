@@ -3,8 +3,6 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-
 GET     /:className/:id             controllers.GenericResource.get(className:String, id:Long)
 PUT     /:className/                controllers.GenericResource.put(className:String)
 PUT     /:className                 controllers.GenericResource.put(className:String)

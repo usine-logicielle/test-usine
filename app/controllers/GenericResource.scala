@@ -1,9 +1,10 @@
-package adapter.rest
+package controllers
 
 import play.api.mvc.{Action, Controller}
 import domain.Entity
 import converter.JsonConverter
 import adapter.persistence.DbAdapter
+import adapter.rest.EmptyEntity
 
 object GenericResource extends Controller {
 
