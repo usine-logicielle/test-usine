@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.figarocms</groupId>
+    <artifactId>consumption-udd-test</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>Test du plugin scala de sonar</name>
+
+    <build>
+        <sourceDirectory>app</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
+    </build>
+
+    <properties>
+        <report.dir>target/scala-2.10/coverage-report</report.dir>
+        <scala.version>2.10</scala.version>
+
+        <sonar.language>scala</sonar.language>
+        <sonar.host.url>http://localhost:9081/</sonar.host.url>
+        <sonar.jdbc.url>jdbc:mysql://localhost:9998/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true</sonar.jdbc.url>
+        <sonar.jdbc.driver>com.mysql.jdbc.Driver</sonar.jdbc.driver>
+        <sonar.jdbc.username>sonar</sonar.jdbc.username>
+        <sonar.jdbc.password>sonar</sonar.jdbc.password>
+
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.surefire.reportsPath>test-reports</sonar.surefire.reportsPath>
+        <sonar.core.codeCoveragePlugin>cobertura</sonar.core.codeCoveragePlugin>
+        <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
+        <sonar.cobertura.reportPath>target/scala-${scala.version}/coverage-report/cobertura.xml</sonar.cobertura.reportPath>
+
+        <sonar.surefire.reportsPath>${report.dir}</sonar.surefire.reportsPath>
+        <sonar.junit.reportsPath>${report.dir}</sonar.junit.reportsPath>
+    </properties>
+</project>
