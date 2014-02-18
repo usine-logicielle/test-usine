@@ -5,9 +5,6 @@ import org.squeryl.{Session, SessionFactory}
 import org.squeryl.adapters.MySQLAdapter
 import org.squeryl.PrimitiveTypeMode._
 
-/**
- * Created by rauricoste on 03/02/14.
- */
 object DbAdapter {
 
   Class.forName("com.mysql.jdbc.Driver")

@@ -3,16 +3,13 @@ package adapter.persistence
 import org.squeryl.{Table, Schema}
 import domain.Person
 
-/**
- * Created by rauricoste on 03/02/14.
- */
 object Library extends Schema {
 
   def getTable[T](clazz:Class[_ <: T]): Table[T] = {
     val result = schemas.get(clazz)
     result match {
       case Some(a: Table[T]) => a
-      case _ => throw new ClassCastException("impossible to find table definition for " + manifest)
+      case _ => throw new ClassCastException("impossible to find table definition for " + clazz)
     }
   }
 
