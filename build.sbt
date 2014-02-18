@@ -31,8 +31,8 @@ sonar.settings
 // launch sonar with "sbt sonarPublish"
 sonar.sonarProperties ++= Seq(
   "sonar.language" -> "scala",
-  "sonar.host.url" -> "http://localhost:9081",
-  "sonar.jdbc.url" -> "jdbc:mysql://localhost:9998/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true",
+  "sonar.host.url" -> "http://consumption-udd:9000",
+  "sonar.jdbc.url" -> "jdbc:mysql://consumption-udd:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true",
   "sonar.jdbc.driverClassName" -> "com.mysql.jdbc.Driver",
   "sonar.jdbc.username" -> "sonar",
   "sonar.jdbc.password" -> "sonar",
