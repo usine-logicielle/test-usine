@@ -32,6 +32,13 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 publishMavenStyle := true
 
+lazy val publishDist = TaskKey[sbt.File]("publish-dist", "publish the dist artifact")
+
+publishDist <<= (target in Universal, normalizedName, version) map { (targetDir, id, version) =>
+  val packageName = "%s-%s" format(id, version)
+  targetDir / (packageName + ".zip")
+}
+
 publishTo <<= version { (v: String) =>
   val nexus = "http://mvnrepository.adencf.local/nexus/content/repositories/"
   if (v.trim.endsWith("SNAPSHOT"))
