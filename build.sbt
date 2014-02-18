@@ -20,6 +20,8 @@ libraryDependencies ++= Seq(
   "org.scalatest"                % "scalatest_2.10"        % "2.0"      % "test"
 )
 
+releaseSettings
+
 play.Project.playScalaSettings
 
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
