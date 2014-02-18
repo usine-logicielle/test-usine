@@ -18,3 +18,5 @@ addSbtPlugin("com.ebiznext.sbt.plugins" % "sbt-sonar" % "0.1.1")
 addSbtPlugin("no.arktekk.sbt" % "aether-deploy" % "0.11")
 
 addSbtPlugin("com.github.gseitz" % "sbt-release" % "0.8.2")
+
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.4.0")

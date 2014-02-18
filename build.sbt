@@ -61,3 +61,5 @@ sonar.sonarProperties ++= Seq(
   "sonar.binaries" -> "target/scala-2.10/scct-classes",
   "sonar.verbose" -> "false"
 )
+
+org.scalastyle.sbt.ScalastylePlugin.Settings
