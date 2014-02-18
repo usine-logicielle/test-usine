@@ -1,3 +1,4 @@
+import aether.Aether._
 import com.ebiznext.sbt.plugins.SonarPlugin.sonar
 
 organization := "fr.figarocms"
@@ -19,9 +20,23 @@ libraryDependencies ++= Seq(
   "org.scalatest"                % "scalatest_2.10"        % "2.0"      % "test"
 )
 
-releaseSettings
-
 play.Project.playScalaSettings
+
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+
+publishMavenStyle := true
+
+publishTo <<= version { (v: String) =>
+  val nexus = "http://mvnrepository.adencf.local/nexus/content/repositories/"
+  if (v.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "adenclassifieds-snapshots")
+  else
+    Some("releases"  at nexus + "adenclassifieds")
+}
+
+seq(aetherSettings: _*)
+
+aetherPublishSettings
 
 // launch scct with command "sbt scct:test"
 ScctPlugin.instrumentSettings
