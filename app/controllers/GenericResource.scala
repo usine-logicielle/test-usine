@@ -32,7 +32,7 @@ object GenericResource extends Controller {
       Ok(JsonConverter.toJson(empty))
   }
 
-  private def getClazz[T <: Entity](className: String): Class[T] = {
+  private[controllers] def getClazz[T <: Entity](className: String): Class[T] = {
     val formattedClass = className.substring(0, 1).toUpperCase + className.substring(1)
     val result = Class.forName("domain." + formattedClass)
     result match {

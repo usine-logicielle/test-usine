@@ -6,7 +6,7 @@ import domain.Entity
 
 object JsonConverter {
 
-  val mapper = new ObjectMapper()
+  private val mapper = new ObjectMapper()
   mapper.registerModule(DefaultScalaModule)
 
   def toJson(value: Any): String = {
