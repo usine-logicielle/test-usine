@@ -1,3 +1,5 @@
+import com.ebiznext.sbt.plugins.SonarPlugin.sonar
+
 name := "playApp"
 
 version := "1.0-SNAPSHOT"
@@ -17,4 +19,26 @@ libraryDependencies ++= Seq(
 
 play.Project.playScalaSettings
 
+// launch scct with command "sbt scct:test"
 ScctPlugin.instrumentSettings
+
+sonar.settings
+
+// launch sonar with "sbt sonarPublish"
+sonar.sonarProperties ++= Seq(
+  "sonar.language" -> "scala",
+  "sonar.host.url" -> "http://localhost:9081",
+  "sonar.jdbc.url" -> "jdbc:mysql://localhost:9998/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true",
+  "sonar.jdbc.driverClassName" -> "com.mysql.jdbc.Driver",
+  "sonar.jdbc.username" -> "sonar",
+  "sonar.jdbc.password" -> "sonar",
+  "sonar.core.codeCoveragePlugin" -> "cobertura",
+  "sonar.java.coveragePlugin" -> "cobertura",
+  "sonar.dynamicAnalysis" -> "reuseReports",
+  "sonar.surefire.reportsPath" -> "target/test-reports",
+  "sonar.cobertura.reportPath" -> "target/scala-2.10/coverage-report/cobertura.xml",
+  "sonar.sources" -> "app",
+  "sonar.tests" -> "test",
+  "sonar.binaries" -> "target/scala-2.10/scct-classes",
+  "sonar.verbose" -> "false"
+)
