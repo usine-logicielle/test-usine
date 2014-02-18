@@ -13,4 +13,5 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.2.1")
 
 addSbtPlugin("com.sqality.scct" % "sbt-scct" % "0.3")
 
+// github project : https://github.com/ebiznext/sbt-sonar
 addSbtPlugin("com.ebiznext.sbt.plugins" % "sbt-sonar" % "0.1.1")
