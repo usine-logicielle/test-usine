@@ -38,12 +38,10 @@ seq(aetherSettings: _*)
 
 aetherPublishSettings
 
-// launch scct with command "sbt scct:test"
 ScctPlugin.instrumentSettings
 
 sonar.settings
 
-// launch sonar with "sbt sonarPublish"
 sonar.sonarProperties ++= Seq(
   "sonar.language" -> "scala",
   "sonar.host.url" -> "http://consumption-udd:9000",
