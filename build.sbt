@@ -3,11 +3,10 @@ import com.ebiznext.sbt.plugins.SonarPlugin.sonar
 import sbtrelease.ReleaseStep
 import sbtrelease.ReleasePlugin.ReleaseKeys._
 import sbtrelease.ReleaseStateTransformations._
-import com.typesafe.sbt.SbtNativePackager.NativePackagerKeys.dist
 
 organization := "fr.figarocms"
 
-name := "playApp"
+name := "play-app"
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
@@ -24,24 +23,32 @@ libraryDependencies ++= Seq(
   "org.scalatest"                % "scalatest_2.10"        % "2.0"      % "test"
 )
 
-releaseSettings
-
 play.Project.playScalaSettings
 
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 publishMavenStyle := true
 
+crossPaths := false
+
+lazy val dist = com.typesafe.sbt.SbtNativePackager.NativePackagerKeys.dist
+
 lazy val publishDist = TaskKey[sbt.File]("publish-dist", "publish the dist artifact")
+
+publish <<= (publish) dependsOn dist
+
+publishLocal <<= (publishLocal) dependsOn dist
+
+artifact in publishDist ~= {
+    (art: Artifact) => art.copy(`type` = "zip", extension = "zip")
+}
 
 publishDist <<= (target in Universal, normalizedName, version) map { (targetDir, id, version) =>
   val packageName = "%s-%s" format(id, version)
   targetDir / (packageName + ".zip")
 }
 
-publish <<= (publish) dependsOn dist
-
-publishLocal <<= (publishLocal) dependsOn dist
+releaseSettings ++ addArtifact(artifact in publishDist, publishDist)
 
 publishTo <<= version { (v: String) =>
   val nexus = "http://mvnrepository.adencf.local/nexus/content/repositories/"
@@ -59,7 +66,7 @@ releaseProcess := Seq[ReleaseStep](
   commitReleaseVersion,                   // : ReleaseStep, performs the initial git checks
   tagRelease,                             // : ReleaseStep
   publishArtifacts,                       // : ReleaseStep, checks whether `publishTo` is properly set up
-  sbtrelease.releaseTask(dist),
+  //sbtrelease.releaseTask(dist),
   setNextVersion,                         // : ReleaseStep
   commitNextVersion,                      // : ReleaseStep
   pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
