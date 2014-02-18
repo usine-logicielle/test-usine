@@ -39,6 +39,10 @@ publishDist <<= (target in Universal, normalizedName, version) map { (targetDir,
   targetDir / (packageName + ".zip")
 }
 
+publish <<= (publish) dependsOn dist
+
+publishLocal <<= (publishLocal) dependsOn dist
+
 publishTo <<= version { (v: String) =>
   val nexus = "http://mvnrepository.adencf.local/nexus/content/repositories/"
   if (v.trim.endsWith("SNAPSHOT"))
