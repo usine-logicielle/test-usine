@@ -1,21 +1,27 @@
 package controllers
 
-import metrics.HealthChecked
+import metrics.{MetricsRegistry, HealthChecked}
 import java.util.NoSuchElementException
 import play.api.mvc.{Controller, Action}
 
 object HealthCheckResource extends Controller with HealthChecked {
 
-  healthCheck("rest") {
+  final val healthCheckName = "rest"
+
+  healthCheck(healthCheckName) {
     true
   }
 
   def get(name: String) = Action {
     try {
-      Ok(registry.runHealthCheck(name).isHealthy.toString)
+      Ok(MetricsRegistry.healthCheck.runHealthCheck(name).isHealthy.toString)
     } catch {
       case e: NoSuchElementException => NotFound("404 : Not found")
     }
+  }
+
+  def getDefault() = {
+    get(getClass.getName.split("\\$").last + "." + healthCheckName)
   }
 
 }

@@ -3,10 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /:className/:id             controllers.GenericResource.get(className:String, id:Long)
-PUT     /:className/                controllers.GenericResource.put(className:String)
-GET     /admin/health/:name         controllers.HealthCheckResource.get(name:String)
-GET     /admin/metrics/:name        controllers.MetricsResource.get(name:String)
+GET     /:className/:id                   controllers.GenericResource.get(className:String, id:Long)
+PUT     /:className/                      controllers.GenericResource.put(className:String)
+GET     /admin/health/:name               controllers.HealthCheckResource.get(name:String)
+GET     /admin/health/                    controllers.HealthCheckResource.getDefault()
+GET     /admin/metrics/timer/:name        controllers.MetricsResource.getTimer(name:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
