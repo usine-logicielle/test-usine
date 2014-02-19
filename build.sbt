@@ -29,6 +29,8 @@ credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 publishMavenStyle := true
 
+pomIncludeRepository := { x => false }
+
 crossPaths := false
 
 lazy val dist = com.typesafe.sbt.SbtNativePackager.NativePackagerKeys.dist
@@ -42,6 +44,12 @@ publishLocal <<= (publishLocal) dependsOn dist
 artifact in publishDist ~= {
     (art: Artifact) => art.copy(`type` = "zip", extension = "zip")
 }
+
+publishArtifact in (Compile, packageBin) := false
+
+publishArtifact in (Compile, packageDoc) := false
+
+publishArtifact in (Compile, packageSrc) := false
 
 publishDist <<= (target in Universal, normalizedName, version) map { (targetDir, id, version) =>
   val packageName = "%s-%s" format(id, version)
@@ -65,16 +73,14 @@ releaseProcess := Seq[ReleaseStep](
   setReleaseVersion,                      // : ReleaseStep
   commitReleaseVersion,                   // : ReleaseStep, performs the initial git checks
   tagRelease,                             // : ReleaseStep
+  sbtrelease.releaseTask(dist),
   publishArtifacts,                       // : ReleaseStep, checks whether `publishTo` is properly set up
-  //sbtrelease.releaseTask(dist),
   setNextVersion,                         // : ReleaseStep
   commitNextVersion,                      // : ReleaseStep
   pushChanges                             // : ReleaseStep, also checks that an upstream branch is properly configured
 )
 
 seq(aetherSettings: _*)
-
-aetherPublishSettings
 
 ScctPlugin.instrumentSettings
 
