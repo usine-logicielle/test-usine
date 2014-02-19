@@ -4,16 +4,27 @@ import domain.Entity
 import org.squeryl.{Session, SessionFactory}
 import org.squeryl.adapters.MySQLAdapter
 import org.squeryl.PrimitiveTypeMode._
+import adapter.conf.ConfigurationUtils
+import org.squeryl.internals.DatabaseAdapter
+import java.sql.DriverManager
 
 object DbAdapter {
 
-  Class.forName("com.mysql.jdbc.Driver")
-  SessionFactory.concreteFactory = Some(() =>
-    Session.create(
-      java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/scala", "root", "password"),
-      new MySQLAdapter))
+  private class Datasource(val dsName: String) {
+    def initConcreteFactory(adapter: DatabaseAdapter) = {
+      val driverName = ConfigurationUtils.getString("db." + dsName + ".driver")
+      val url = ConfigurationUtils.getString("db." + dsName + ".url")
+      val login = ConfigurationUtils.getString("db." + dsName + ".user")
+      val password = ConfigurationUtils.getString("db." + dsName + ".password")
+      Class.forName(driverName)
 
-  def find[T <: Entity](clazz:Class[T])(id:Long): Option[T] = {
+      SessionFactory.concreteFactory = Some(() => Session.create(DriverManager.getConnection(url, login, password), adapter))
+    }
+  }
+
+  new Datasource("default").initConcreteFactory(new MySQLAdapter)
+
+  def find[T <: Entity](clazz: Class[T])(id: Long): Option[T] = {
     inTransaction {
       Library.getTable[T](clazz).find(x => x.id == id)
     }
