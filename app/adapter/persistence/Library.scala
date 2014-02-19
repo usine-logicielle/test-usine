@@ -16,7 +16,9 @@ object Library extends Schema {
   var schemas: Map[Any, Table[_]] = Map()
 
   private def addClass[T](implicit manifest:Manifest[T]) = {
-    schemas = schemas + (manifest.runtimeClass -> table[T]())
+    val schema = table[T]()
+    schema.schema.printDdl
+    schemas = schemas + (manifest.runtimeClass -> schema)
   }
 
   addClass[Person]
