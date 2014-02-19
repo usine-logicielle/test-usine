@@ -19,6 +19,7 @@ val derbyDriver   = "org.apache.derby"        % "derby"                %  "10.7.
 libraryDependencies ++= Seq(
    mysqlDriver,
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.1.3",
+  "nl.grons"                     %% "metrics-scala"        % "3.0.4"
   "org.squeryl"                  %% "squeryl"              % "0.9.5-6",
   "org.scalatest"                % "scalatest_2.10"        % "2.0"      % "test"
 )
@@ -105,5 +106,3 @@ sonar.sonarProperties ++= Seq(
 )
 
 org.scalastyle.sbt.ScalastylePlugin.Settings
-
-libraryDependencies += "nl.grons" %% "metrics-scala" % "3.0.4"
