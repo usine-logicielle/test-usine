@@ -105,3 +105,5 @@ sonar.sonarProperties ++= Seq(
 )
 
 org.scalastyle.sbt.ScalastylePlugin.Settings
+
+libraryDependencies += "nl.grons" %% "metrics-scala" % "3.0.4"

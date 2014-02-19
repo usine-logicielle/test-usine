@@ -5,12 +5,15 @@ import domain.Entity
 import converter.JsonConverter
 import adapter.persistence.DbAdapter
 import adapter.rest.EmptyEntity
+import metrics.Instrumented
 
-object GenericResource extends Controller {
+object GenericResource extends Controller with Instrumented {
 
-  def get(className: String, id: Long) = Action {
+  val getterMetrics = metrics.timer("getter")
+
+  def get(className: String, id: Long) = getterMetrics.time(Action {
     try {
-      val clazz:Class[_ <: Entity] = getClazz(className)
+      val clazz: Class[_ <: Entity] = getClazz(className)
       Ok({
         val result = DbAdapter.find(clazz)(id)
         result match {
@@ -21,12 +24,12 @@ object GenericResource extends Controller {
     } catch {
       case e: ClassNotFoundException => NotFound("class " + className + " is not supported")
     }
-  }
+  })
 
   def put(className: String) = Action(parse.tolerantJson) {
     request =>
-      val clazz:Class[_ <: Entity] = getClazz(className)
-      val entity:Entity = JsonConverter.fromJson(clazz)(request.body.toString())
+      val clazz: Class[_ <: Entity] = getClazz(className)
+      val entity: Entity = JsonConverter.fromJson(clazz)(request.body.toString())
       DbAdapter.put(entity)
       val empty = new EmptyEntity(entity.id)
       Ok(JsonConverter.toJson(empty))
