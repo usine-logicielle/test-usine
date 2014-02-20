@@ -34,6 +34,10 @@ pomIncludeRepository := { x => false }
 
 crossPaths := false
 
+initialize <<= (version) { v =>
+  System.setProperty("VERSION", v)
+}
+
 lazy val dist = com.typesafe.sbt.SbtNativePackager.NativePackagerKeys.dist
 
 lazy val publishDist = TaskKey[sbt.File]("publish-dist", "publish the dist artifact")
