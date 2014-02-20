@@ -98,10 +98,10 @@ sonar.sonarProperties ++= Seq(
   "sonar.java.coveragePlugin" -> "cobertura",
   "sonar.dynamicAnalysis" -> "reuseReports",
   "sonar.surefire.reportsPath" -> "target/test-reports",
-  "sonar.cobertura.reportPath" -> "target/scala-2.10/coverage-report/cobertura.xml",
+  "sonar.cobertura.reportPath" -> "target/coverage-report/cobertura.xml",
   "sonar.sources" -> "app",
   "sonar.tests" -> "test",
-  "sonar.binaries" -> "target/scala-2.10/scct-classes",
+  "sonar.binaries" -> "target/scct-classes",
   "sonar.verbose" -> "false"
 )
 
