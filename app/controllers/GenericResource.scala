@@ -11,7 +11,7 @@ object GenericResource extends Controller with Instrumented {
 
   val getterMetrics = metrics.timer("getter")
 
-  def get(className: String, id: Long) = getterMetrics.time(Action {
+  def get(className: String, id: Long):Action[_] = getterMetrics.time(Action {
     try {
       val clazz: Class[_ <: Entity] = getClazz(className)
       Ok({
@@ -26,7 +26,7 @@ object GenericResource extends Controller with Instrumented {
     }
   })
 
-  def put(className: String) = Action(parse.tolerantJson) {
+  def put(className: String):Action[_] = Action(parse.tolerantJson) {
     request =>
       val clazz: Class[_ <: Entity] = getClazz(className)
       val entity: Entity = JsonConverter.fromJson(clazz)(request.body.toString())

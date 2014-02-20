@@ -12,7 +12,7 @@ object HealthCheckResource extends Controller with HealthChecked {
     true
   }
 
-  def get(name: String) = Action {
+  def get(name: String):Action[_] = Action {
     try {
       Ok(MetricsRegistry.healthCheck.runHealthCheck(name).isHealthy.toString)
     } catch {
@@ -20,7 +20,7 @@ object HealthCheckResource extends Controller with HealthChecked {
     }
   }
 
-  def getDefault() = {
+  def getDefault():Action[_] = {
     get(getClass.getName.split("\\$").last + "." + healthCheckName)
   }
 

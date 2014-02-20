@@ -7,7 +7,7 @@ import nl.grons.metrics.scala.Timer
 
 object MetricsResource extends Controller with Instrumented {
 
-  def getTimer(name: String) = Action {
+  def getTimer(name: String):Action[_] = Action {
     MetricsRegistry.timers.get(name) match {
       case Some(timer:Timer) => Ok(convert(timer))
       case _ => NotFound("404 : Not found")

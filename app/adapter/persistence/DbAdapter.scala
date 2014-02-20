@@ -11,7 +11,7 @@ import java.sql.DriverManager
 object DbAdapter {
 
   private class Datasource(val dsName: String) {
-    def initConcreteFactory(adapter: DatabaseAdapter) = {
+    def initConcreteFactory(adapter: DatabaseAdapter):Unit = {
       val driverName = ConfigurationUtils.getString("db." + dsName + ".driver")
       val url = ConfigurationUtils.getString("db." + dsName + ".url")
       val login = ConfigurationUtils.getString("db." + dsName + ".user")
@@ -30,7 +30,7 @@ object DbAdapter {
     }
   }
 
-  def put[T <: Entity](entity: T) = {
+  def put[T <: Entity](entity: T):Unit = {
     inTransaction {
       if (entity.id > 0) {
         Library.getTable[T](entity.getClass).update(entity)
