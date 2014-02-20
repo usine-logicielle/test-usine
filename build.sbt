@@ -6,7 +6,7 @@ import sbtrelease.ReleaseStateTransformations._
 
 organization := "fr.figarocms"
 
-name := "play-app"
+name := "test-usine"
 
 scalacOptions ++= Seq("-feature", "-deprecation")
 
