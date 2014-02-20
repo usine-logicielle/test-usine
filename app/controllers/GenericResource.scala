@@ -11,7 +11,7 @@ object GenericResource extends Controller with Instrumented {
 
   val getterMetrics = metrics.timer("getter")
 
-  def get(className: String, id: Long):Action[_] = getterMetrics.time(Action {
+  def get(className: String, id: Long) = getterMetrics.time(Action {
     try {
       val clazz: Class[_ <: Entity] = getClazz(className)
       Ok({
